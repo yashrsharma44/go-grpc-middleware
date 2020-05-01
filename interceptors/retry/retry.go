@@ -32,7 +32,8 @@ func UnaryClientInterceptor(optFuncs ...CallOption) grpc.UnaryClientInterceptor 
 	return func(parentCtx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 		grpcOpts, retryOpts := filterCallOptions(opts)
 		callOpts := reuseOrNewWithCallOptions(intOpts, retryOpts)
-		// short circuit for simplicity, and avoiding allocations.
+
+		// Short circuit for simplicity, and avoiding allocations.
 		if callOpts.max == 0 {
 			return invoker(parentCtx, method, req, reply, cc, grpcOpts...)
 		}
@@ -51,7 +52,7 @@ func UnaryClientInterceptor(optFuncs ...CallOption) grpc.UnaryClientInterceptor 
 			if isContextError(lastErr) {
 				if parentCtx.Err() != nil {
 					logTrace(parentCtx, "grpc_retry attempt: %d, parent context error: %v", attempt, parentCtx.Err())
-					// its the parent context deadline or cancellation.
+					// Its the parent context deadline or cancellation.
 					return lastErr
 				} else if callOpts.perCallTimeout != 0 {
 					// We have set a perCallTimeout in the retry middleware, which would result in a context error if

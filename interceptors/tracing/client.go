@@ -18,6 +18,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/util/metautils"
 )
 
+// TODO(bwplotka): Can we make tracing abstraction.
 type opentracingClientReporter struct {
 	typ                 interceptors.GRPCType
 	svcName, methodName string

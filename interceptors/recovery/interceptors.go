@@ -11,9 +11,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// RecoveryHandlerFunc is a function that recovers from the panic `p` by returning an `error`.
-type RecoveryHandlerFunc func(p interface{}) (err error)
-
 // RecoveryHandlerFuncContext is a function that recovers from the panic `p` by returning an `error`.
 // The context can be used to extract request scoped metadata and context values.
 type RecoveryHandlerFuncContext func(ctx context.Context, p interface{}) (err error)
