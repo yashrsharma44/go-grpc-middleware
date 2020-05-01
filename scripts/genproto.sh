@@ -18,10 +18,7 @@ if ! [[ $(${PROTOC_BIN} --version) =~ "3.4.0" ]]; then
 	exit 255
 fi
 
-echo "installing gogofast"
-GO111MODULE=on go install "github.com/gogo/protobuf/protoc-gen-gogofast"
-
-GOGOPROTO_ROOT="$(GO111MODULE=on go list -f '{{ .Dir }}' -m github.com/gogo/protobuf)"
+GOGOPROTO_ROOT="$(GO111MODULE=on go list -modfile=.bingo/protoc-gen-gogofast.mod -f '{{ .Dir }}' -m github.com/gogo/protobuf)"
 GOGOPROTO_PATH="${GOGOPROTO_ROOT}:${GOGOPROTO_ROOT}/protobuf"
 
 DIRS="grpctesting/testpb grpctesting/gogotestpb"
